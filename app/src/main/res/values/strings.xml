@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Persistence</string>
+    <string name="text_content">Hello, world!</string>
+    <string name="first_name">John</string>
+    <string name="last_name">Doe</string>
+    <string name="email_address">johndoe@company.com</string>
+    <string name="button_read">Read</string>
+    <string name="button_write">Write</string>
 </resources>

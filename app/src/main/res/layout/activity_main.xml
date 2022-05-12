@@ -4,15 +4,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="32dp"
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/text_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="@string/text_content"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2" />
 
+    <EditText
+        android:id="@+id/first_name_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:hint="@string/first_name"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/text_content"
+        app:layout_constraintStart_toStartOf="@+id/text_content"
+        app:layout_constraintTop_toBottomOf="@+id/text_content" />
+
+    <EditText
+        android:id="@+id/last_name_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/last_name"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/first_name_field"
+        app:layout_constraintStart_toStartOf="@+id/first_name_field"
+        app:layout_constraintTop_toBottomOf="@+id/first_name_field" />
+
+    <EditText
+        android:id="@+id/email_address_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/email_address"
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/last_name_field"
+        app:layout_constraintStart_toStartOf="@+id/last_name_field"
+        app:layout_constraintTop_toBottomOf="@+id/last_name_field" />
+
+    <Button
+        android:id="@+id/button_read"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/button_read"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintStart_toStartOf="@+id/email_address_field"
+        app:layout_constraintTop_toBottomOf="@+id/email_address_field" />
+
+    <Button
+        android:id="@+id/button_write"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/button_write"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="@+id/email_address_field"
+        app:layout_constraintTop_toBottomOf="@+id/email_address_field" />
 </androidx.constraintlayout.widget.ConstraintLayout>
