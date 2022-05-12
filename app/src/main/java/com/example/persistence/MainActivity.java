@@ -3,11 +3,16 @@ package com.example.persistence;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase database;
@@ -21,6 +26,23 @@ public class MainActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
         database = databaseHelper.getWritableDatabase();
 
+        final Button buttonRead = findViewById(R.id.button_read);
+        buttonRead.setOnClickListener(view -> {
+            List<Contact> contacts = getContacts();
+
+            if (contacts.isEmpty()) {
+                Toast.makeText(this, "No contacts available.", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            final TextView contactsList = findViewById(R.id.contacts_list);
+            contactsList.setText("");
+
+            for (int i = 0; i < contacts.size(); i++) {
+                contactsList.setText(contactsList.getText() + contacts.get(i).toString() + "\n");
+            }
+        });
+
         final Button buttonWrite = findViewById(R.id.button_write);
         buttonWrite.setOnClickListener(view -> {
             final EditText firstNameField = findViewById(R.id.first_name_field);
@@ -29,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
             final String firstName = firstNameField.getText().toString();
             final String lastName = lastNameField.getText().toString();
-            final String emailAddress =  emailAddressField.getText().toString();
+            final String emailAddress = emailAddressField.getText().toString();
 
             if (firstName.isEmpty()) {
                 Toast.makeText(this, "Please, provide a first name.", Toast.LENGTH_LONG).show();
@@ -62,6 +84,23 @@ public class MainActivity extends AppCompatActivity {
         contentValues.put(DatabaseTables.Contact.COLUMN_NAME_LAST_NAME, lastName);
         contentValues.put(DatabaseTables.Contact.COLUMN_NAME_EMAIL_ADDRESS, emailAddress);
         return database.insert(DatabaseTables.Contact.TABLE_NAME, null, contentValues);
+    }
+
+    private List<Contact> getContacts() {
+        List<Contact> contacts = new ArrayList<>();
+
+        Cursor cursor = database.query(DatabaseTables.Contact.TABLE_NAME, null, null, null, null, null, null);
+        while (cursor.moveToNext()) {
+            contacts.add(new Contact(
+                    cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseTables.Contact.COLUMN_NAME_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseTables.Contact.COLUMN_NAME_FIRST_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseTables.Contact.COLUMN_NAME_LAST_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseTables.Contact.COLUMN_NAME_EMAIL_ADDRESS))
+            ));
+        }
+
+        cursor.close();
+        return contacts;
     }
 
     private String capitalize(String string) {
