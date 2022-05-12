@@ -46,11 +46,13 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            addContact(firstName, lastName, emailAddress);
+            addContact(capitalize(firstName), capitalize(lastName), emailAddress.toLowerCase());
 
             firstNameField.getText().clear();
             lastNameField.getText().clear();
             emailAddressField.getText().clear();
+
+            Toast.makeText(this, "Added contact information for " + capitalize(firstName) + " " + capitalize(lastName) + ".", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -60,5 +62,9 @@ public class MainActivity extends AppCompatActivity {
         contentValues.put(DatabaseTables.Contact.COLUMN_NAME_LAST_NAME, lastName);
         contentValues.put(DatabaseTables.Contact.COLUMN_NAME_EMAIL_ADDRESS, emailAddress);
         return database.insert(DatabaseTables.Contact.TABLE_NAME, null, contentValues);
+    }
+
+    private String capitalize(String string) {
+        return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
     }
 }
